@@ -69,7 +69,7 @@ SELECT 'Facebook' Canal
   }
 
   measure: sum_importe_gastado {
-   label: "ADR"
+   label: "importe_gastado"
     type: sum
     sql: ${importe_gastado};;
     value_format: "$#,##0"
