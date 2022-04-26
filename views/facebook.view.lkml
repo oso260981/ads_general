@@ -12,6 +12,7 @@ view: facebook {
   # This dimension will be called "Alcance" in Explore.
 
   dimension: alcance {
+    hidden: yes
     type: number
     sql: ${TABLE}.ALCANCE ;;
   }
@@ -35,24 +36,56 @@ view: facebook {
     sql: ${TABLE}.CAMPANIA ;;
   }
 
+  measure: count_campania {
+    type: count_distinct
+    sql: ${campania} ;;
+  }
+
+
+
   dimension: clics {
+    hidden: yes
     type: number
     sql: ${TABLE}.CLICS ;;
   }
 
+  measure: total_clics {
+    type: sum
+    sql: ${clics} ;;
+  }
+
   dimension: costo_por_resultado {
+    hidden: yes
     type: number
     sql: ${TABLE}.COSTO_POR_RESULTADO ;;
   }
 
+  measure: total_costo_por_resultado {
+    type: sum
+    sql: ${costo_por_resultado} ;;
+  }
+
   dimension: cpc {
+    hidden: yes
     type: number
     sql: ${TABLE}.CPC ;;
   }
 
+  measure: total_cpc {
+    type: sum
+    sql: ${cpc} ;;
+  }
+
+
   dimension: ctr {
+    hidden: yes
     type: number
     sql: ${TABLE}.CTR ;;
+  }
+
+  measure: total_ctr {
+    type: sum
+    sql: ${ctr} ;;
   }
 
   dimension: desarrollo {
@@ -94,13 +127,25 @@ view: facebook {
   }
 
   dimension: importe_gastado {
+    hidden: yes
     type: number
     sql: ${TABLE}.IMPORTE_GASTADO ;;
   }
 
+  measure: total_importe_gastado {
+    type: sum
+    sql: ${importe_gastado} ;;
+  }
+
   dimension: impresiones {
+    hidden: yes
     type: number
     sql: ${TABLE}.IMPRESIONES ;;
+  }
+
+  measure: total_impresiones {
+    type: sum
+    sql: ${impresiones} ;;
   }
 
   dimension_group: inicio_informe {
@@ -124,8 +169,14 @@ view: facebook {
   }
 
   dimension: resultados {
+    hidden: yes
     type: number
     sql: ${TABLE}.RESULTADOS ;;
+  }
+
+  measure: total_resultados {
+    type: sum
+    sql: ${resultados} ;;
   }
 
   dimension: tipo_resultado {
