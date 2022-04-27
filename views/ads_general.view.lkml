@@ -21,7 +21,7 @@ SELECT 'Facebook' Canal
        ,CPC
        ,IMPORTE_GASTADO
        ,FECHA
-       ,0 CONVERSIONES FROM `eon-internal-bigquery.Social_Media_Ads.Facebook`
+       ,RESULTADOS CONVERSIONES FROM `eon-internal-bigquery.Social_Media_Ads.Facebook`
  ;;
   }
 
@@ -31,7 +31,7 @@ SELECT 'Facebook' Canal
   }
 
   dimension: canal {
-    label: "Platoforma"
+    label: "Plataforma"
     type: string
     sql: ${TABLE}.Canal ;;
   }
@@ -42,6 +42,7 @@ SELECT 'Facebook' Canal
   }
 
   dimension: campania {
+    label: "Campañas"
     type: string
     sql: ${TABLE}.CAMPANIA ;;
   }
@@ -55,15 +56,16 @@ SELECT 'Facebook' Canal
   }
 
   dimension: impresiones {
+    hidden: yes
     type: number
     sql: ${TABLE}.IMPRESIONES ;;
   }
 
   measure: sum_impresiones {
-    label: "Total_impresiones"
+    label: "Impresiones"
     type: sum
     sql: ${impresiones};;
-    value_format: "$#,##0"
+    value_format: "0.000,,\" M\""
     drill_fields: [detail*]
   }
 
@@ -71,25 +73,27 @@ SELECT 'Facebook' Canal
 
 
   dimension: clics {
+    hidden: yes
     type: number
     sql: ${TABLE}.CLICS ;;
   }
 
   measure: sum_clics {
-    label: "Total_clics"
+    label: "Clics"
     type: sum
     sql: ${clics};;
-    value_format: "$#,##0"
+    value_format: "0.000,,\" M\""
     drill_fields: [detail*]
   }
 
   dimension: ctr {
+    hidden: yes
     type: number
     sql: ${TABLE}.CTR ;;
   }
 
   measure: sum_ctr {
-    label: "Total ctr"
+    label: "ctr"
     type: sum
     sql: ${ctr};;
     value_format: "$#,##0"
@@ -97,12 +101,13 @@ SELECT 'Facebook' Canal
   }
 
   dimension: cpc {
+    hidden: yes
     type: number
     sql: ${TABLE}.CPC ;;
   }
 
   measure: sum_cpc {
-    label: "Total cpc"
+    label: "cpc"
     type: sum
     sql: ${cpc};;
     value_format: "$#,##0"
@@ -110,15 +115,16 @@ SELECT 'Facebook' Canal
   }
 
   dimension: conversiones {
+    hidden: yes
     type: number
     sql: ${TABLE}.CONVERSIONES ;;
   }
 
   measure: sum_conversiones {
-    label: "Total Conversiones"
+    label: "Conversiones"
     type: sum
     sql: ${conversiones};;
-    value_format: "$#,##0"
+   value_format: "#,##0"
     drill_fields: [detail*]
   }
 
@@ -128,10 +134,10 @@ SELECT 'Facebook' Canal
   }
 
   measure: sum_importe_gastado {
-   label: "Total Costos"
+   label: "Importe Gastado"
     type: sum
     sql: ${importe_gastado};;
-    value_format: "$#,##0"
+   value_format: "$0.000,,\" M\""
     drill_fields: [detail*]
   }
 
@@ -159,6 +165,52 @@ SELECT 'Facebook' Canal
     datatype: date
     sql: ${TABLE}.FECHA ;;
   }
+
+
+  parameter: Metricas {
+
+    type: unquoted
+    allowed_value: {
+      label: "Importe Gastado"
+      value: "Importe_Gastado"
+    }
+    allowed_value: {
+      label: "Impresiones"
+      value: "Impresiones"
+    }
+    allowed_value: {
+      label: "Conversiones"
+      value: "Conversiones"
+    }
+    allowed_value: {
+      label: "Clics"
+      value: "Clics"
+    }
+
+
+
+  }
+
+  measure: Valor_Metrica {
+    label: "Valor Metrica"
+    description: "Valores de metricas"
+    type: sum
+
+    sql:
+        {% if Metricas._is_filtered  == 'Importe Gastado' %}
+           ${importe_gastado}
+        {% elsif Metricas._is_filtered  == 'Impresiones' %}
+           ${impresiones}
+        {% elsif Metricas._is_filtered  == 'Conversiones' %}
+           ${conversiones}
+        {% elsif Metricas._is_filtered  == 'Clics' %}
+           ${clics}
+        {% endif %}
+        ;;
+
+  }
+
+
 
   set: detail {
     fields: [
