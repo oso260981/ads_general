@@ -191,20 +191,24 @@ SELECT 'Facebook' Canal
 
   }
 
-  measure: Valor_Metrica {
+  measure: valor_Metrica {
     label: "Valor Metrica"
     description: "Valores de metricas"
     type: sum
+    value_format: "$0.000,,\" M\""
 
     sql:
-        {% if Metricas._is_filtered  == 'Importe Gastado' %}
+
+
+        {% if Metricas._parameter_value   == 'Importe_Gastado' %}
            ${importe_gastado}
-        {% elsif Metricas._is_filtered  == 'Impresiones' %}
+        {% elsif Metricas._parameter_value  == 'Impresiones' %}
            ${impresiones}
-        {% elsif Metricas._is_filtered  == 'Conversiones' %}
+        {% elsif Metricas._parameter_value  == 'Conversiones' %}
            ${conversiones}
-        {% elsif Metricas._is_filtered  == 'Clics' %}
+        {% elsif Metricas._parameter_value  == 'Clics' %}
            ${clics}
+
         {% endif %}
         ;;
 
