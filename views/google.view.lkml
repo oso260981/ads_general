@@ -40,6 +40,12 @@ view: google {
     sql: ${TABLE}.CONVERSIONES ;;
   }
 
+  measure: total_conversiones {
+    type: sum
+    value_format: "#,##0.00"
+    sql:  ${conversiones} ;;
+  }
+
   dimension: costo {
     type: number
     sql: ${TABLE}.COSTO ;;
@@ -53,6 +59,12 @@ view: google {
   dimension: ctr {
     type: number
     sql: ${TABLE}.CTR ;;
+  }
+
+  measure: total_ctr {
+    type: sum
+    value_format: "#,##0.00"
+    sql: ${ctr} ;;
   }
 
   dimension: desarrollo {
@@ -101,6 +113,11 @@ view: google {
   dimension: impr {
     type: number
     sql: ${TABLE}.IMPR ;;
+  }
+
+  measure: total_impresiones {
+    type: sum
+    sql: ${impr} ;;
   }
 
   dimension: moneda {

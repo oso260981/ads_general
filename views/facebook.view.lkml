@@ -62,6 +62,7 @@ view: facebook {
 
   measure: total_costo_por_resultado {
     type: sum
+    value_format: "$#,##0.00"
     sql: ${costo_por_resultado} ;;
   }
 
@@ -73,6 +74,7 @@ view: facebook {
 
   measure: total_cpc {
     type: sum
+    value_format: "#,##0.00"
     sql: ${cpc} ;;
   }
 
@@ -85,6 +87,7 @@ view: facebook {
 
   measure: total_ctr {
     type: sum
+    value_format: "#,##0.00"
     sql: ${ctr} ;;
   }
 
