@@ -72,9 +72,9 @@ view: facebook {
     sql: ${TABLE}.CPC ;;
   }
 
-  measure: total_cpc {
-    type: sum
-    value_format: "#,##0.00"
+  measure: prom_cpc {
+    type: average
+    value_format: "$#,##0.00"
     sql: ${cpc} ;;
   }
 
